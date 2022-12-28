@@ -36,7 +36,7 @@
                                            style="width: 100px;" alt="logo">
                                         <h4 class="mt-1 mb-3 pb-1">Conf Bs As</h4>
                                     </div>  
-                                    <form>
+                                    <form action="login" method="post" autocomplete="off">
                                         <div class="text-center">
                                             <p class="mb-3">INICIO DE SESIÓN</p>
                                         </div> 

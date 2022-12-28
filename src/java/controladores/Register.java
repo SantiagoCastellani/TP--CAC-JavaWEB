@@ -22,7 +22,9 @@ import modelos.UsuarioDAO;
 
 @WebServlet(name = "Register", urlPatterns = {"/register"})
 public class Register extends HttpServlet {
-/*
+    
+    //private static final long serialVersionUID = 1L;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -37,18 +39,19 @@ public class Register extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
         }
-    }*/
-/*
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-    }*/
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {        
-        //processRequest(request, response);        
+        //processRequest(request, response);   
+        RequestDispatcher disp = null;
         String nombreUsuario = (String) request.getParameter("nombre");
         String apellidoUsuario = (String) request.getParameter("apellido");
         String emailUsuario = (String) request.getParameter("email");
@@ -59,21 +62,22 @@ public class Register extends HttpServlet {
 	usuario.setApellido(apellidoUsuario);
         usuario.setEmail(emailUsuario);
 	usuario.setPassword(passwordUsuario);	
-        
-        UsuarioDAO usuarioDAO = null;
-        
-        try {
+                
+        /*try {
             usuarioDAO = new UsuarioDAO();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
         
         try {
-            usuarioDAO.save(usuario);            
-            Class.forName("com.mysql.cj.jdbc.Driver");        
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            usuarioDAO.save(usuario);
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection coneccion = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyectoweb","root","DATOSsecretos@1232");       
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         }
+        request.getRequestDispatcher("/index.jsp").forward(request, response); 
     }
 
     
@@ -81,5 +85,6 @@ public class Register extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }
+
 
 }
